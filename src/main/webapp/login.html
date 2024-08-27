@@ -1,16 +1,63 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-    <p>login</p>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarefas</title>
+</head>
+<body>
+<header>
+    <h1>Lista de tarefas</h1>
+</header>
+<main>
+
+    <section class="tarefas">
+        <table id="listaTabela">
+            <thead>
+            <tr>
+                <th>ID:</th>
+                <th>Titulo:</th>
+                <th>Descrição:</th>
+                <th>Status:</th>
+                <th>Data de atualização:</th>
+                <th>Operações</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </section>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('http://localhost:8080/api/tarefas')
+                .then(response => response.json())
+                .then(tarefas => {
+                    const tbody = document.querySelector('#listaTabela tbody');
+                    tarefas.forEach(tarefas => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                                <td>${tarefas.id}</td>
+                                <td>${tarefas.titulo}</td>
+                                <td>${tarefas.descricao}</td>
+                                <td>${tarefas.status}</td>
+                                <td>${tarefas.data}</td>
+
+                            `;
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar livros:', error);
+                });
+        });
+    </script>
+</main>
+<footer>
+    <h5>@2024. Todos direitos reservados a SYNC</h5>
+</footer>
+
+</body>
 </html>

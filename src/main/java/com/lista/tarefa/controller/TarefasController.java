@@ -11,8 +11,10 @@ import java.util.List;
 @RequestMapping("/api")
 public class TarefasController {
     private static List<TarefaModel> listTarefas = new ArrayList<>();
+    private static List<TarefaModel> tarefasConcluidas = new ArrayList<>();
     public TarefasController() {
         listTarefas = new ArrayList<>();
+        tarefasConcluidas = new ArrayList<>();
     }
 
     @PostMapping("/cadastrar")
@@ -38,6 +40,26 @@ public class TarefasController {
         }
         return 0;
     }
+
+    private static void concluir( int id){
+        int size = findById(id);
+
+        for(TarefaModel tarefa : listTarefas){
+
+            if(tarefa.getId() == id){
+                tarefa.setStatus(true);
+                listTarefas.set(size, tarefa);
+                break;
+            }
+        }
+
+    }
+    @PostMapping("/concluirid{id}")
+    public ResponseEntity<String>concluirTarefa(@PathVariable int id){
+        concluir(id);
+        return new ResponseEntity<>("Tarefa concluida com sucesso!", HttpStatus.OK);
+    }
+
     @DeleteMapping("/deletar{id}")
     public ResponseEntity<String> deletarTarefa(@PathVariable int id) {
         int index = findById(id);
@@ -54,8 +76,9 @@ public class TarefasController {
     }
 
     @PutMapping("/update")
-    public static void atualizarTarefa(@RequestBody int id, TarefaModel updateTarefa) {
-        int index = findById(id);
+    public static void atualizarTarefa(@RequestBody TarefaModel updateTarefa) {
+        System.out.println("Teste");
+        int index = findById(updateTarefa.getId());
         listTarefas.set(index, updateTarefa);
     }
 
