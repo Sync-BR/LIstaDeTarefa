@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./src/css/reset.css">
+    <link rel="stylesheet" href="./src/css/style.css">
     <title>Tarefas</title>
 </head>
 
@@ -15,13 +16,14 @@
         <h1>Lista de tarefas</h1>
     </header>
     <main>
+        <section class="operacoes">
 
+            <button type="button" class="btn btn-dark addTarefa" data-bs-toggle="modal"
+                data-bs-target="#cadastrarTarefa">Adicionar tarefa</button>
+        </section>
         <section class="tarefas">
             <table id="listaTabela" class="table  table-striped-columns">
                 <thead>
-                    <button type="button" class="btn btn-dark addTarefa" data-bs-toggle="modal"
-                        data-bs-target="#cadastrarTarefa">Adicionar tarefa</button>
-                    <br><br>
                     <tr>
                         <th scope="col">ID:</th>
                         <th scope="col">Titulo:</th>
@@ -53,7 +55,7 @@
                                 <td>Invativo</td>
                                 <td>${tarefas.data}</td>
                                 <td>
-                                <button type="button" id="buttonConcluir" class="btn btn-primary" value="${tarefas.id}" onclick="concluirTarefa(this)" >Concluir tarefa</button>
+                                <button type="button" id="buttonConcluir" class="btn btn-primary" value="${tarefas.id}" onclick="concluirTarefa(${tarefas.id})" >Concluir tarefa</button>
                                 <button type="button" class="btn btn-danger" value="${tarefas.id}" onclick="apagarTarefa(${tarefas.id})">Apagar</button>
                                 </td>
 
@@ -132,12 +134,12 @@
         </div>
     </div>
     <script>
-        function concluirTarefa(button) {
+        function concluirTarefa(id) {
             // Captura o ID da tarefa a partir do valor do botão
             const tarefaId = document.getElementById("buttonConcluir").value;
             console.log(tarefaId);
             // Faz a requisição para o endpoint do Spring Boot
-            fetch(`http://localhost:8080/api/concluirid${tarefaId}`, {
+            fetch(`http://localhost:8080/api/concluirid${id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -244,11 +246,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                   Deseja marcar essa tarefa como concluido
+                    Deseja marcar essa tarefa como concluido
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="concluirTarefa(this)">Concluir tarefa</button>
+                    <button type="button" class="btn btn-primary" onclick="concluirTarefa(this)">Concluir
+                        tarefa</button>
                 </div>
             </div>
         </div>

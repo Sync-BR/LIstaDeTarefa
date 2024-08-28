@@ -1,0 +1,19 @@
+body{
+    font-size: 14px;
+}
+
+header{
+    height: 15vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.operacoes{
+   display: flex;
+   flex-direction: row;
+   justify-content: end;
+   padding: 0 25px 0 0 ;
+}
+.tarefas{
+    padding: 15px 10px 0 10px;
+}
